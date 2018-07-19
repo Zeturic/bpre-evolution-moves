@@ -8,7 +8,7 @@ This brings that to Fire Red.
 
 If you wanted, for example, Blastoise to learn Hydro Cannon upon evolving, you would add Hydro Cannon to the beginning of Blastoise's level up moves as a level 0 move. That's it.
 
-Sadly, PGE doesn't support setting a move to level 0. You'll have to add it with a hex editor for now.
+Note that PGE doesn't support setting a move to level 0. You can do it with G3T's Pokémon Editor, however.
 
 ### How do I build this?
 
