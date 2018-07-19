@@ -4,8 +4,11 @@
 .open "test.gba", 0x08000000
 
 .org free_space
+.importobj "build/src/relocatable.o"
 
 .area reservation
+    .align 2
+
     evolution_hook:
         ldr r1, =tasks
         mov r2, r8
@@ -14,7 +17,7 @@
         add r5, r0, r1
         ldrb r1, [r5, #0x10]
         mov r0, r9
-        ldr r3, =sub_803EA88 |1
+        ldr r3, =moves_during_evolution |1
         bl @@call
         ldr r3, =evolution_hook_return |1
     @@call:
