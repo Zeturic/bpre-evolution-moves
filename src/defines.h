@@ -9,10 +9,11 @@
 
 #include "defines/getattr.h"
 
-#define MOVESET_PAD                                         \
+#define MOVESET_PAD {                                       \
     ++learnset_move_index;                                  \
     move_to_learn = learnset_move->move;                    \
-    return pokemon_moveset_pad(pokemon, move_to_learn);
+    return pokemon_moveset_pad(pokemon, move_to_learn);     \
+}
 
 #ifndef JAMBO_LEARNSETS
     #define CONDITION (*((u16*) learnset_move) != 0xFFFF)
