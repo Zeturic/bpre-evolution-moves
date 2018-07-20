@@ -16,7 +16,7 @@ u16 moves_during_evolution(struct pokemon* pokemon, u8 unk) {
     learnset_move_index = 0;
     learnset_move = pokemon_attack_table[species] + learnset_move_index;
 
-    for (; *((u16*) learnset_move) != 0xFFFF; ++learnset_move, ++learnset_move_index) {
+    for (; CONDITION; ++learnset_move, ++learnset_move_index) {
         u8 req_level = learnset_move->level;
 
         if (!req_level || req_level == level) {
