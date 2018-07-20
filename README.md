@@ -25,3 +25,5 @@ Run `python scripts/makinoa`. Your output will be in `test.gba`; `rom.gba` won't
 ### A word of caution
 
 At this point, I wouldn't use this other than to experiment with it. It needs to be more exhaustively tested (especially with Jambo-style learnsets) before I'd feel comfortable recommending you use this in your hack.
+
+There appears to be an issue where a Pokemon won't learn regular moves it's supposed to learn on that level if it learns an evolution move. Further hacking is necessary.
