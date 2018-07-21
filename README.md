@@ -8,7 +8,9 @@ This brings that to Fire Red.
 
 If you wanted, for example, Blastoise to learn Hydro Cannon upon evolving, you would add Hydro Cannon to the beginning of Blastoise's level up moves as a level 0 move. That's it.
 
-Note that PGE doesn't support setting a move to level 0. You can do it with G3T's Pokémon Editor, however.
+PGE doesn't let you set a move to level 0 *unless* you are using Jambo-style learnsets. G3T lets you set a move to level 0, but doesn't support Jambo-style learnsets at all.
+
+In short, if you're using regular-style learnsets, add your evolution moves using G3T. If you're using Jambo-syle learnsets, add your evolution moves using PGE.
 
 ### How do I build this?
 
