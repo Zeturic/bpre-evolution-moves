@@ -3,10 +3,10 @@
 
 .open "test.gba", 0x08000000
 
-.org free_space
-.importobj "build/src/relocatable.o"
+.org allocation
+.area allocation_size
+    .importobj "build/src/relocatable.o"
 
-.area reservation
     .align 2
 
     evolution_hook:

@@ -55,5 +55,6 @@ Temporary Items
 *.sa1
 *.lnk
 *.sym
+*.ss?
 
 build
