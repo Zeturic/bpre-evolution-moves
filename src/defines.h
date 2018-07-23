@@ -1,8 +1,6 @@
 #pragma once
 #include "types.h"
 
-// #define JAMBO_LEARNSETS
-
 #include "structs.h"
 #include "functions.h"
 #include "locations.h"

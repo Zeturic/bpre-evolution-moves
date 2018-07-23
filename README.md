@@ -16,16 +16,10 @@ In short, if you're using regular-style learnsets, add your evolution moves usin
 
 If the array of moveset data pointers - in a vanilla game, located at `0x0825D7B4` - has been repointed, update the definition of `pokemon_attack_table` in `constants.s`.
 
-If you are using Jambo's learnset hack to allow for moves above `511` to be used in level-up learnsets, uncomment out the definition of `JAMBO_LEARNSETS` in `src/defines.h`.
+If you are using Jambo's learnset hack to allow for moves above `511` to be used in level-up learnsets, ensure `JAMBO_LEARNSETS` isn't commented out in the `defines` section of `config.ini`.
 
-After that, update `free-space` in `config.ini` to where you would like it to start looking for free space.
+After that, update `free-space` in the `main` section of `config.ini` to where you would like it to start looking for free space.
 
 Put your ROM in the project root directory and name it `rom.gba`.
 
 Run `python scripts/makinoa`. Your output will be in `test.gba`; `rom.gba` won't be modified.
-
-### A word of caution
-
-At this point, I wouldn't use this other than to experiment with it. It needs to be more exhaustively tested (especially with Jambo-style learnsets) before I'd feel comfortable recommending you use this in your hack.
-
-There appears to be an issue where a Pokemon won't learn regular moves it's supposed to learn on that level if it learns an evolution move. Further hacking is necessary. **Edit**: Seems to have been fixed with an edit.
