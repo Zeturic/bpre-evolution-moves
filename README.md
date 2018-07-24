@@ -1,6 +1,6 @@
 ### Evolution Moves
 
-Sun and Moon introduced a feature where Pokémon can learn one or moves when evolving, regardless of what level it evolves on. For example, Vaporeon will learn Water Gun when it evolves, regardless of whether it evolves on level 1 or level 100.
+Sun and Moon introduced a feature where Pokémon can learn one or more moves when evolving, regardless of what level it evolves on. For example, Vaporeon will learn Water Gun when it evolves, regardless of whether it evolves on level 1 or level 100.
 
 This brings that to Fire Red.
 
