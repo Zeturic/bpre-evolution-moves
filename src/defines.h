@@ -14,7 +14,11 @@
 }
 
 #ifndef JAMBO_LEARNSETS
-    #define CONDITION (*((u16*) learnset_move) != 0xFFFF)
+
+#define CONDITION (*((u16*) learnset_move) != 0xFFFF)
+
 #else
-    #define CONDITION (learnset_move->level != 0xFF)
+
+#define CONDITION (learnset_move->level != 0xFF)
+
 #endif  
