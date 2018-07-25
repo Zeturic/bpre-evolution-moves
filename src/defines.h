@@ -1,6 +1,7 @@
 #pragma once
 #include "types.h"
 
+#include "attributes.h"
 #include "structs.h"
 #include "functions.h"
 #include "locations.h"

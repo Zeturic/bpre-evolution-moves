@@ -10,10 +10,10 @@ struct learnset_move {
 
 #else
 
-struct learnset_move {
+struct packed learnset_move {
     u16 move;
     u8 level;
-} __attribute__((packed));
+};
 
 #endif
 
