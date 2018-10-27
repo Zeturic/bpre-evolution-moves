@@ -22,4 +22,6 @@ After that, update `free-space` in the `main` section of `config.ini` to where y
 
 Put your ROM in the project root directory and name it `rom.gba`.
 
-Run `python scripts/makinoa`. Your output will be in `test.gba`; `rom.gba` won't be modified.
+Run `python scripts/makinoa`. You will need to have a DEVKITARM environment variable pointing to devkitARM's installation directory (likely `C:\devkitPro\devkitARM`), as well an ARMIPS environment variable pointing to the armips binary (not the containing folder).
+
+Your output will be in `test.gba`; `rom.gba` won't be modified.
