@@ -7,8 +7,8 @@ Licensed under the Simplified BSD License.
 #### Dependencies
 
 * A recent version of Python 3
-* devkitARM and a DEVKITARM environment variable with the directory it was installed to.
-* Armips and a ARMIPS environment variable with the path of the armips binary.
+* devkitARM and a `DEVKITARM` environment variable with the directory it was installed to.
+* Armips and a `ARMIPS` environment variable with the path of the armips binary.
 
 #### Usage
 

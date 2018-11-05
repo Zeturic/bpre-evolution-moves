@@ -84,22 +84,23 @@ LDFLAGS = [
 
 long_calls = set()
 
-for srcfile in (path for path in os.listdir(src) if fnmatch.fnmatch(path, "*.c")):
-    exit_code = subprocess.run([
-        CC,
-        *CFLAGS,
-        "-mno-long-calls" if srcfile in short_calls else "-mlong-calls",
-        os.path.join(src, srcfile),
-        "-o",
-        os.path.join(build_src, srcfile.replace(".c", ".o"))
-    ]).returncode
+if os.path.exists(src):
+    for srcfile in (path for path in os.listdir(src) if fnmatch.fnmatch(path, "*.c")):
+        exit_code = subprocess.run([
+            CC,
+            *CFLAGS,
+            "-mno-long-calls" if srcfile in short_calls else "-mlong-calls",
+            os.path.join(src, srcfile),
+            "-o",
+            os.path.join(build_src, srcfile.replace(".c", ".o"))
+        ]).returncode
 
-    if exit_code != 0:
-        print("Error :: Compilation failed.")
-        sys.exit(exit_code)
+        if exit_code != 0:
+            print("Error :: Compilation failed.")
+            sys.exit(exit_code)
 
-    if srcfile not in short_calls:
-        long_calls.add(srcfile)
+        if srcfile not in short_calls:
+            long_calls.add(srcfile)
 
 relocatable = os.path.join(build_src, "relocatable.o")
 
