@@ -1,5 +1,9 @@
 .gba
+.arm
+.include "constants.s"
+
 .thumb
+.include "functions.s"
 
 .open "test.gba", 0x08000000
 
@@ -33,8 +37,3 @@
 .endarea
 
 .close
-
-.include "functions.s"
-
-.arm
-.include "constants.s"
