@@ -2,10 +2,11 @@
 
 import os, sys, argparse, configparser, shutil, subprocess, fnmatch, itertools
 import os.path
+import kewensis
 
 src = "src"
 build = "build"
-build_src = os.path.join(build, src)
+obj = "obj"
 
 # switch cwd, if specified by cmd line args
 cmdlineargparser = argparse.ArgumentParser(description="Compiles C code and inserts it into a ROM.")
@@ -27,8 +28,9 @@ except FileNotFoundError:
 free_space = iniparser.get("main", "free-space", fallback="0x08800000")
 optimization_level = iniparser.get("main", "optimization-level", fallback="-O2")
 reserve = iniparser.get("main", "reserve", fallback="0")
-short_calls = set() if "short-calls" not in iniparser else set(iniparser["short-calls"])
+static_objects = set() if "static" not in iniparser else set(iniparser["static"])
 defines = {} if "defines" not in iniparser else dict(iniparser["defines"])
+libgcc = set() if "libgcc" not in iniparser else set(iniparser["libgcc"])
 
 try:
     free_space = int(free_space, 16)
@@ -46,21 +48,22 @@ if optimization_level not in ("-O", "-O0", "-O1", "-O2", "-O3", "-Ofast", "-Og",
     print(f"Error :: {optimization_level} is not an understood optimization level.")
     sys.exit(1)
 
-# clean build dir
+# clean build dirs
 shutil.rmtree(build, ignore_errors=True)
+shutil.rmtree(obj, ignore_errors=True)
 os.mkdir(build)
-os.mkdir(build_src)
+os.mkdir(obj)
 
-if "DEVKITARM" in os.environ:
-    CC = os.path.join(os.environ["DEVKITARM"], "bin", "arm-none-eabi-gcc")
-    LD = os.path.join(os.environ["DEVKITARM"], "bin", "arm-none-eabi-ld")
-else:
-    CC = shutil.which("arm-none-eabi-gcc")
-    LD = shutil.which("arm-none-eabi-ld")
+DEVKITARM = os.environ.get("DEVKITARM", "")
 
-    if CC is None or LD is None:
+if not os.path.exists(DEVKITARM):
+    DEVKITARM = os.path.join(r"C:/", "devkitPro", "devkitARM")
+    if not os.path.exists(DEVKITARM):
         print("Error :: Can't find devkitARM.")
         sys.exit(1)
+
+CC = os.path.join(DEVKITARM, "bin", "arm-none-eabi-gcc")
+LD = os.path.join(DEVKITARM, "bin", "arm-none-eabi-ld")
 
 CFLAGS = [
     optimization_level,
@@ -82,36 +85,52 @@ LDFLAGS = [
     "--relocatable"
 ]
 
-long_calls = set()
+relocatable_objects = set()
 
 if os.path.exists(src):
     for srcfile in (path for path in os.listdir(src) if fnmatch.fnmatch(path, "*.c")):
+        objfile = srcfile.replace(".c", ".o")
+
         exit_code = subprocess.run([
             CC,
             *CFLAGS,
-            "-mno-long-calls" if srcfile in short_calls else "-mlong-calls",
+            "-mno-long-calls" if srcfile in static_objects else "-mlong-calls",
             os.path.join(src, srcfile),
             "-o",
-            os.path.join(build_src, srcfile.replace(".c", ".o"))
+            os.path.join(obj, objfile)
         ]).returncode
 
         if exit_code != 0:
             print("Error :: Compilation failed.")
             sys.exit(exit_code)
 
-        if srcfile not in short_calls:
-            long_calls.add(srcfile)
+        if srcfile not in static_objects:
+            relocatable_objects.add(objfile)
 
-relocatable = os.path.join(build_src, "relocatable.o")
+relocatable = os.path.join(obj, "relocatable.o")
 
 # ensures the file exists
 with open(relocatable, "w"): pass
 
-if long_calls:
+# grabs all the requested object files from libgcc.a
+# and marks them for inclusion in relocatable.o
+if libgcc:
+    with open(os.path.join(DEVKITARM, "lib", "gcc", "arm-none-eabi", "5.3.0", "thumb", "libgcc.a"), "rb") as library:
+        data = kewensis.parse(library)
+    for datum in data:
+        if datum.filename in libgcc:
+            libgcc.remove(datum.filename)
+            with open(os.path.join(obj, datum.filename), "wb") as objfile:
+                objfile.write(datum.contents)
+            relocatable_objects.add(datum.filename)
+        if not libgcc:
+            break
+
+if relocatable_objects:
     exit_code = subprocess.run([
         LD,
         *LDFLAGS,
-        *(os.path.join(build_src, srcfile.replace(".c", ".o")) for srcfile in long_calls),
+        *(os.path.join(obj, objfile) for objfile in relocatable_objects),
         "-o",
         relocatable
     ]).returncode
