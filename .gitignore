@@ -58,3 +58,4 @@ Temporary Items
 *.ss?
 
 build
+obj

@@ -4,7 +4,7 @@ Sun and Moon introduced a feature where Pokémon can learn one or more moves whe
 
 This brings that to Fire Red.
 
-### How do I add evolution moves?
+#### How do I add evolution moves?
 
 If you wanted, for example, Blastoise to learn Hydro Cannon upon evolving, you would add Hydro Cannon to the beginning of Blastoise's level up moves as a level 0 move. That's it.
 
@@ -12,7 +12,7 @@ PGE doesn't let you set a move to level 0 *unless* you are using Jambo-style lea
 
 In short, if you're using regular-style learnsets, add your evolution moves using G3T. If you're using Jambo-syle learnsets, add your evolution moves using PGE.
 
-### How do I build this?
+#### How do I build this?
 
 If the array of moveset data pointers - in a vanilla game, located at `0x0825D7B4` - has been repointed, update the definition of `pokemon_attack_table` in `constants.s`.
 
@@ -20,8 +20,4 @@ If you are using Jambo's learnset hack to allow for moves above `511` to be used
 
 After that, update `free-space` in the `main` section of `config.ini` to where you would like it to start looking for free space.
 
-Put your ROM in the project root directory and name it `rom.gba`.
-
-Run `python scripts/makinoa`. You will need to have a `DEVKITARM` environment variable pointing to devkitARM's installation directory (likely `C:\devkitPro\devkitARM`), as well an `ARMIPS` environment variable pointing to the armips binary (not the containing folder).
-
-Your output will be in `test.gba`; `rom.gba` won't be modified.
+Once everything has been configured, check [here](scripts/makinoa/README.md) for build instructions.
