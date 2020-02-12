@@ -13,8 +13,3 @@ typedef signed long long s64;
 typedef u8  bool8;
 typedef u16 bool16;
 typedef u32 bool32;
-
-#define TRUE  1
-#define FALSE 0
-
-#define NULL 0

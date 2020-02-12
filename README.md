@@ -4,17 +4,35 @@ Sun and Moon introduced a feature where Pokémon can learn one or more moves whe
 
 This brings that to Fire Red.
 
-### What do I do before I build this?
+### Build Instructions
 
-If you are using Jambo's learnset hack to allow for moves above `511` to be used in level-up learnsets, ensure `USE_JAMBO_LEARNSET_HACK` isn't commented out in the `defines` section of `config.ini`.
+See [here](https://gist.github.com/Zeturic/db1611cc7b17c3140f9b9af32e1b596b) for the prequisites and help in installing them.
 
-The build script will search for adequate free space, but if you need to insert the code in a particular place, you can tell it where to start looking by modifying `start-at` in `config.ini`. If the given address is acceptable (i.e. is word-aligned and has enough bytes of free space), it will be inserted there.
+#### Cloning the repo and building the tools
 
-### How do I build this?
+Open your terminal to whatever folder you want to download this repo into. Then, do the following to download the repo and build the included tools:
 
-Once everything has been configured, check [here](scripts/makinoa/README.md) for build instructions.
+```shell
+$ git clone https://github.com/Zeturic/bpre-evolution-moves.git
+$ cd bpre-evolution-moves
+$ ./build_tools.sh
+```
 
-### How do I add evolution moves?
+#### Adding your ROM
+
+Copy your ROM to this directory and rename it `rom.gba`.
+
+#### Configuration
+
+Open `config.mk` in a text editor to set some compile-time configuration.
+
+The build system is smart enough to find enough free space on its own, but if you want it to be inserted at a particular address, you can specify it by updating the definition of `START_AT`.
+
+If the given address is acceptable (i.e. is word-aligned and has enough bytes of free space), it will be inserted there. Otherwise, it will just use `START_AT` to determine where in the ROM it should start looking for free space.
+
+If you are using Jambo's learnset hack to allow for moves above `511` to be used in level-up learnsets, set `USE_JAMBO_LEARNSET_HACK` to `1`; otherwise, keep it at `0`.
+
+### Usage Instructions
 
 If you wanted, for example, Blastoise to learn Hydro Cannon upon evolving, you would add Hydro Cannon to the beginning of Blastoise's level up moves as a level 0 move. That's it.
 
@@ -22,6 +40,6 @@ PGE doesn't let you set a move to level 0 *unless* you are using Jambo-style lea
 
 In short, if you're using regular-style learnsets, add your evolution moves using G3T. If you're using Jambo-syle learnsets, add your evolution moves using PGE.
 
-### What if I might want to add Jambo's learnset hack later?
+### Credits
 
-If there's any chance whatsoever you'll need/want it later, add the learnset hack now. It'll use more space than not using it, but it's not enough to be worth caring about.
+The project structure and some of the build tools are from [pokeemerald](https://github.com/pret/pokeemerald).
