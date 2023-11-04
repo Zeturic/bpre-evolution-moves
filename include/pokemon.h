@@ -7,7 +7,7 @@ struct __attribute__((packed)) JamboLevelUpLearnset {
     u8 lvl;
 };
 
-struct VanillaLevelUpLearnset {
+struct __attribute__((packed)) VanillaLevelUpLearnset {
     u16 move : 9;
     u16 lvl : 7;
 };
